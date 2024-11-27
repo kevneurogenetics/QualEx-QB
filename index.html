@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Bank</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        .question-container {
+            margin-bottom: 30px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            border-radius: 8px;
+        }
+        .question-title {
+            font-weight: bold;
+        }
+        .explanation {
+            margin-top: 10px;
+            font-style: italic;
+            color: #555;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Question Bank</h1>
+    <div id="questionBank"></div>
+
+    <script>
+        const questions = [
+            {
+                question: "What is the capital of France?",
+                options: ["Paris", "London", "Berlin", "Madrid"],
+                correctIndex: 0,
+                explanation: "Paris is the capital and largest city of France, known for its cultural and historical significance."
+            },
+            {
+                question: "Which element has the chemical symbol 'O'?",
+                options: ["Oxygen", "Gold", "Osmium", "Hydrogen"],
+                correctIndex: 0,
+                explanation: "'O' is the chemical symbol for Oxygen, which is essential for respiration in most living organisms."
+            },
+            // Add more questions up to 100 here
+        ];
+
+        const questionBank = document.getElementById("questionBank");
+
+        questions.forEach((q, index) => {
+            const questionContainer = document.createElement("div");
+            questionContainer.classList.add("question-container");
+
+            const questionTitle = document.createElement("p");
+            questionTitle.classList.add("question-title");
+            questionTitle.textContent = `${index + 1}. ${q.question}`;
+            questionContainer.appendChild(questionTitle);
+
+            q.options.forEach((option, i) => {
+                const optionButton = document.createElement("button");
+                optionButton.textContent = option;
+                optionButton.addEventListener("click", () => handleAnswerClick(q, i, questionContainer));
+                questionContainer.appendChild(optionButton);
+            });
+
+            questionBank.appendChild(questionContainer);
+        });
+
+        function handleAnswerClick(question, selectedIndex, container) {
+            const explanationDiv = document.createElement("div");
+            explanationDiv.classList.add("explanation");
+
+            if (selectedIndex === question.correctIndex) {
+                explanationDiv.textContent = "Correct! " + question.explanation;
+                explanationDiv.classList.add("correct");
+            } else {
+                explanationDiv.textContent = "Incorrect. " + question.explanation;
+                explanationDiv.classList.add("incorrect");
+            }
+
+            // Remove existing explanation if any
+            const existingExplanation = container.querySelector(".explanation");
+            if (existingExplanation) {
+                container.removeChild(existingExplanation);
+            }
+
+            container.appendChild(explanationDiv);
+        }
+    </script>
+</body>
+</html>
